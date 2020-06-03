@@ -107,7 +107,8 @@ SELECT
     COUNT(DISTINCT al.[Label]) AS 'Number of Labels'
 FROM Artist ar
 JOIN Album al ON al.ArtistId = ar.Id
-GROUP BY ar.ArtistName;
+GROUP BY ar.ArtistName
+HAVING COUNT(DISTINCT al.[Label]) > 1;
 
 -- Task Fifteen
 SELECT
