@@ -101,37 +101,33 @@ JOIN Song s ON g.Id = s.GenreId
 GROUP BY g.[Label]
 ORDER BY g.[Label];
 
--- Task Fourteen NOT DONE
+-- Task Fourteen
 SELECT
     ar.ArtistName,
-    COUNT(al.[Label]) AS 'Number of Labels'
+    COUNT(DISTINCT al.[Label]) AS 'Number of Labels'
 FROM Artist ar
-JOIN Album al ON ar.Id = al.ArtistId
-GROUP BY ar.ArtistName HAVING COUNT(al.[Label]) > 1
-ORDER BY ar.ArtistName;
+JOIN Album al ON al.ArtistId = ar.Id
+GROUP BY ar.ArtistName;
 
--- Task Fifteen NOT DONE CORRECTLY
+-- Task Fifteen
 SELECT
     Title,
-    MAX(AlbumLength) AS 'Album Length'
+    AlbumLength
 FROM Album
-WHERE AlbumLength > 4000
-GROUP BY Title;
+WHERE AlbumLength = (SELECT MAX(AlbumLength) FROM Album);
 
--- Task Sixteen NOT DONE CORRECTLY
+-- Task Sixteen
 SELECT
     Title,
-    MAX(SongLength) AS 'Song Length'
+    SongLength
 FROM Song
-WHERE SongLength > 900
-GROUP BY Title;
+WHERE SongLength = (SELECT MAX(SongLength) FROM Song);
 
--- Task Seventeen NOT DONE && NOT DONE CORRECTLY
+-- Task Seventeen
 SELECT
-    s.Title,
-    --a.Title,
-    MAX(SongLength) AS 'Song Length'
+    s.Title AS 'Song Title',
+    s.SongLength AS 'Song Length',
+    a.Title AS 'Album Title'
 FROM Song s
 JOIN Album a ON a.Id = s.AlbumId
-WHERE SongLength > 900
-GROUP BY s.Title;
+WHERE s.SongLength = (SELECT MAX(SongLength) FROM Song);
